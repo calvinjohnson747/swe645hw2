@@ -6,9 +6,10 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('DockerHub_ID') // Update with your Docker Hub credentials ID
         GIT_REPO = 'https://github.com/calvinjohnson747/swe645hw2.git' // Update with your GitHub repository URL
-        MAVEN_PROJECT_PATH = 'project1_2/src/mavenproject1-1.0-SNAPSHOT.war'
         DOCKER_IMAGE_NAME = 'calvinjohnson747/swe645hw2-image'
         TIMESTAMP = new Date().format('yyyyMMdd-HHmmss')
+        KUBE_CONFIG = credentials('KUBE_CONFIG')
+        
     }
     
     stages {
@@ -51,6 +52,7 @@ pipeline {
         stage('Update Kubernetes Deployments') {
             steps {
                 script {
+                    withCredentials([kubeconfigFile(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG')])
                     def timestamp = new Date().format('yyyyMMdd-HHmmss')
                     sh "kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME}:${timestamp} --all"
                 }
