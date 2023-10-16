@@ -21,18 +21,6 @@ pipeline {
             }
         }
 
-        stage('Tag Docker Image') {
-            steps {
-                script {
-                    def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
-                        sh "docker pull ${DOCKER_IMAGE_NAME} ."
-                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
-                    }
-                }
-            }
-        }
-
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
