@@ -24,11 +24,10 @@ pipeline {
             stage('Build Docker Image') {
                 steps {
                     script {
-                        def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
-
                         // Build and tag the Docker image
-                        sh "docker build -t ${hw2-image} ."
-                        sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
+                        sh 'docker build -t calvinjohnson747/hw2-image .'
+                       // sh "docker build -t ${hw2-image} ."
+                        //sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
 
                         }
                     }
