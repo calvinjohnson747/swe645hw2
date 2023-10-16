@@ -46,7 +46,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
 
         stage('Update Kubernetes Deployments') {
             steps {
