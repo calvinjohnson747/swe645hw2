@@ -1,36 +1,23 @@
-pipeline{
-  agent any
-  environment{
-    DOCKERHUB_PASS = credentials('Cjjjjj123#')
-  }
-  stages{
-    stage("Building the Student Survey Image"){
-      steps{
-        script{
-          checkout scm
-          sh 'rm -rf *.war'
-          sh 'jar -cvf mavenproject1-1.0-SNAPSHOT.war -C project1-2/src/ .'
-          sh 'echo ${BUILD_TIMESTAMP}'
-          sh "docker login -u calvinjohnson747 -p ${Cjjjjj123#}"
-          def customImage = docker.build("calvinjohnson747/hw2-image:${BUILD_TIMESTAMP}")
+pipeline {
+    agent any
+    
+    stages {
+        stage('Hello World') {
+            steps {
+                echo 'Hello World!'
+            }
         }
-      }
-      stage("Pushing Image on DockerHub"){
-        steps{
-          script{
-            sh 'docker push calvinjohnson747/hw2-image:${BUILD_TIMESTAMP}'
-          }
-        }
-      }
-      stage("Deploying to Rancher as single pod"){
-        steps{
-          sh 'kubectl set image deployment/swe645_hw2 studentsurvey-pipeline=calvinjohnson747/hw2-image:${BUILD_TIMESTAMP} -n jenkins-pipeline'
-        }
-      }
-      stage("Deploying to Rancher with load balancer"){
-        steps{
-          sh 'kubectl set image deployment/swe645_hw2 studentsurvey-pipeline2=calvinjohnson747/hw2-image:${BUILD_TIMESTAMP} -n jenkins-pipeline'
-        }
-      }
+        
+        // Add more stages as needed for your actual build and deployment steps
+        // For testing, you can keep it simple with just the 'Hello World' stage.
     }
-  }
+    
+    post {
+        success {
+            echo 'Jenkins Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Jenkins Pipeline failed!'
+        }
+    }
+}
