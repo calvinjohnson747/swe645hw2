@@ -21,19 +21,19 @@ pipeline {
             }
         }
         stages {
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
+            stage('Build Docker Image') {
+                steps {
+                    script {
+                        def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
 
-                    // Build and tag the Docker image
-                    sh "docker build -t ${hw2-image} ."
-                    sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
+                        // Build and tag the Docker image
+                        sh "docker build -t ${hw2-image} ."
+                        sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
 
+                        }
                     }
                 }
             }
-        }
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
