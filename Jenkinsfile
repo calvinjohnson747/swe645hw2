@@ -8,6 +8,7 @@ pipeline {
         GIT_REPO = 'https://github.com/calvinjohnson747/swe645hw2.git' // Update with your GitHub repository URL
         MAVEN_PROJECT_PATH = 'project1_2/src/mavenproject1-1.0-SNAPSHOT.war'
         DOCKER_IMAGE_NAME = 'calvinjohnson747/hw2-image'
+        TIMESTAMP = new Date().format('yyyyMMdd-HHmmss')
     }
     
     stages {
@@ -24,7 +25,7 @@ pipeline {
             steps {
                 script {
                     def timestamp = new Date().format('yyyyMMdd-HHmmss')
-                    def dockerImage = "${DOCKER_IMAGE_NAME}:${timestamp}"
+                    def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
                         sh "docker build -t ${hw2-image} ."
                         sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
