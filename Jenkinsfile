@@ -24,7 +24,6 @@ pipeline {
         stage('Tag Docker Image') {
             steps {
                 script {
-                    def timestamp = new Date().format('yyyyMMdd-HHmmss')
                     def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
                         sh "docker build -t ${DOCKER_IMAGE_NAME} ."
