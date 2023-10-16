@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
-                        sh "docker push ${DOCKER_IMAGE_NAME}:${timestamp}"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
                         sh "docker push ${DOCKER_IMAGE_NAME}:latest"
                     }
                 }
