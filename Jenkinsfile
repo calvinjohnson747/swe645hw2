@@ -53,8 +53,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG')])
-                    def timestamp = new Date().format('yyyyMMdd-HHmmss')
-                    sh "kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME}:${timestamp} --all"
+                    
+                    sh "kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME}:${TIMESTAMP} --all"
                 }
             }
         }
