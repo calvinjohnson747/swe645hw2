@@ -26,8 +26,8 @@ pipeline {
                     def timestamp = new Date().format('yyyyMMdd-HHmmss')
                     def dockerImage = "${DOCKER_IMAGE_NAME}:${timestamp}"
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
-                        sh "docker build -t ${dockerImage} ."
-                        sh "docker tag ${dockerImage} ${DOCKER_IMAGE_NAME}:latest"
+                        sh "docker build -t ${hw2-image} ."
+                        sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
                     }
                 }
             }
