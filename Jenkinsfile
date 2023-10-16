@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stages {
+      
             stage('Build Docker Image') {
                 steps {
                     script {
@@ -33,7 +33,7 @@ pipeline {
                         }
                     }
                 }
-            }
+            
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
