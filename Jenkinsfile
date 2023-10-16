@@ -1,18 +1,7 @@
 pipeline {
     agent any
-    tools{
-        maven '3.9.5'
-    }
-    environment {
-        DOCKER_HUB_CREDENTIALS = credentials('DockerHub_ID') // Update with your Docker Hub credentials ID
-        GIT_REPO = 'https://github.com/calvinjohnson747/swe645hw2.git' // Update with your GitHub repository URL
-        MAVEN_PROJECT_PATH = 'project1_2/src/mavenproject1-1.0-SNAPSHOT.war'
-        DOCKER_IMAGE_NAME = 'calvinjohnson747/hw2-image'
-        TIMESTAMP = new Date().format('yyyyMMdd-HHmmss')
-    }
-    
     stages {
-        stage('Clone Repository and Build WAR') {
+    stage('Clone Repository and Build WAR') {
             steps {
                 script {
                     git url: GIT_REPO
@@ -20,47 +9,26 @@ pipeline {
                 }
             }
         }
-      
-            stage('Build Docker Image') {
-                steps {
-                    script {
-                        def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
-
-                        // Build and tag the Docker image
-                        sh "docker build -t ${hw2-image} ."
-                        sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
-
-                        }
-                    }
-                }
-            
-        stage('Push Docker Image to Docker Hub') {
+        stage('Build Docker image') {
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
-                        sh "docker push ${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
-                        sh "docker push ${DOCKER_IMAGE_NAME}:latest"
-                    }
-                }
+                sh 'docker build -t calvinjohnson747/hw2-image .'
             }
         }
-
-        stage('Update Kubernetes Deployments') {
+        stage('Login to Docker Hub') {
             steps {
-                script {
-                    def timestamp = new Date().format('yyyyMMdd-HHmmss')
-                    sh "kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME}:${timestamp} --all"
-                }
+                sh 'docker login -u calvinjohnson747 -p Cjjjjj123#'
             }
         }
-    }
-    
-    post {
-        success {
-            echo 'Jenkins Pipeline executed successfully!'
+        stage('Push Docker image') {
+            steps {
+                sh 'docker push calvinjohnson747/hw2-image'
+            }
         }
-        failure {
-            echo 'Jenkins Pipeline failed!'
+        
+        stage('Restart deployment') {
+            steps {
+                sh 'kubectl rollout restart deployment/tomcat-deployment'
+            }
         }
     }
 }
