@@ -26,7 +26,7 @@ pipeline {
                 script {
                     def dockerImage = "${DOCKER_IMAGE_NAME}:${TIMESTAMP}"
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
-                        sh "docker build -t ${DOCKER_IMAGE_NAME} ."
+                        sh "docker pull ${DOCKER_IMAGE_NAME} ."
                         sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:latest"
                     }
                 }
