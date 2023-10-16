@@ -54,7 +54,7 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')])
                     
-                    sh 'kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME} -n jenkins-pipeline'
+                    sh "kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME} -all"
                 }
             }
         }
