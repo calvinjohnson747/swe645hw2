@@ -8,7 +8,7 @@ pipeline {
         GIT_REPO = 'https://github.com/calvinjohnson747/swe645hw2.git' // Update with your GitHub repository URL
         DOCKER_IMAGE_NAME = 'calvinjohnson747/swe645hw2-image'
         TIMESTAMP = new Date().format('yyyyMMdd-HHmmss')
-        KUBE_CONFIG = credentials('KUBE_CONFIG')
+        KUBE_CONFIG = credentials('kubeconfig')
         
     }
     
@@ -52,7 +52,7 @@ pipeline {
         stage('Update Kubernetes Deployments') {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'KUBE_CONFIG', variable: 'KUBE_CONFIG')])
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')])
                     
                     sh 'kubectl set image deployment/tomcat-deployment tomcat-container=${DOCKER_IMAGE_NAME} -n jenkins-pipeline'
                 }
