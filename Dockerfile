@@ -5,7 +5,7 @@ FROM tomcat:latest
 WORKDIR /usr/local/tomcat/webapps/
 
 # Copy the WAR file into the webapps directory
-COPY mavenproject1-1.0-SNAPSHOT.war .
+COPY target/mavenproject1-1.0-SNAPSHOT.war .
 
 # Expose port 8080 for Tomcat
 EXPOSE 8080
