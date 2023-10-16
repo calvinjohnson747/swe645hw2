@@ -26,9 +26,7 @@ pipeline {
                     script {
                         // Build and tag the Docker image
                         docker.build("calvinjohnson747/hw2-image:{TIMESTAMP}") .'
-                       // sh "docker build -t ${hw2-image} ."
-                        //sh "docker tag ${hw2-image} ${DOCKER_IMAGE_NAME}:latest"
-
+                       
                         }
                     }
                 }
