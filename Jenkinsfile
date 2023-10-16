@@ -25,7 +25,7 @@ pipeline {
                 steps {
                     script {
                         // Build and tag the Docker image
-                        docker.build("calvinjohnson747/hw2-image:{TIMESTAMP}") .'
+                        docker.build("calvinjohnson747/hw2-image:{TIMESTAMP}")
                        
                         }
                     }
